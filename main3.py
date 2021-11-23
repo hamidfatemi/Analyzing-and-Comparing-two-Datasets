@@ -148,7 +148,7 @@ def main():
 
     
     except FileNotFoundError:
-        print("File Not Found!")
+        print("train.csv File Not Found!")
         quit()
     except:
         s.rollback() #Rollback the changes on error
@@ -171,6 +171,9 @@ def main():
             s.add(record) #Add all the records
 
         s.commit() #Attempt to commit all the records
+     except FileNotFoundError:
+        print("test.csv File Not Found!")
+        quit()
     except Exception as e:
         s.rollback() #Rollback the changes on error
         print(e)
@@ -242,6 +245,9 @@ def main():
             s.add(record) #Add all the records
 
         s.commit() #Attempt to commit all the records
+    except FileNotFoundError:
+        print("ideal.csv File Not Found!")
+        quit()
     except Exception as e:
         s.rollback() #Rollback the changes on error
         print(e)
@@ -346,7 +352,7 @@ def main():
         print(row)
 
     #printing the 4 choosed ideal function name
-    col_list
+    print('The selected Ideal functions are:',col_list[1:5])
 
 if __name__ == '__main__':
     main()
