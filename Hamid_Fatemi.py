@@ -8,6 +8,7 @@ from sqlalchemy import create_engine , MetaData,Table,Integer,Float,Column,Strin
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy_utils import database_exists, create_database
+import sys
 
 
 def Load_Data(file_name):
@@ -147,11 +148,10 @@ try:
         s.add(record) #Add all the records
 
     s.commit() #Attempt to commit all the records
-except FileNotFoundError:
-        print("train.csv File Not Found!")
-        quit()
-except:
+except Exception as e:
     s.rollback() #Rollback the changes on error
+    print(e)
+    sys.exit(1)
 finally:
     s.close() 
 
@@ -172,12 +172,10 @@ try:
         s.add(record) #Add all the records
 
     s.commit() #Attempt to commit all the records
-except FileNotFoundError:
-        print("test.csv File Not Found!")
-        quit()
 except Exception as e:
     s.rollback() #Rollback the changes on error
     print(e)
+    sys.exit(1)
 finally:
     s.close() 
 
@@ -247,12 +245,10 @@ try:
         s.add(record) #Add all the records
 
     s.commit() #Attempt to commit all the records
-except FileNotFoundError:
-        print("ideal.csv File Not Found!")
-        quit()
 except Exception as e:
     s.rollback() #Rollback the changes on error
     print(e)
+    sys.exit(1)
 finally:
     s.close() 
 
@@ -352,8 +348,9 @@ plt.show()
 
 #showing the contents of answer table(Test_Table) row by row
 Trow = engine.execute('select * from Test_Table')
-for row in Trow:
-    print(" X:%2d,\t Y:%3.3f ,\t Diviation: %3.3f  \t %s"%(row["X"],row["Y"],row["y_Dev"],row["y_No"]))
+df_last = pd.DataFrame(Trow, columns=['Row_no','x_test', 'y_test','Min_Deviation','Ideal_Func'])
+pd.set_option('display.max_rows', df_last.shape[0]+1)
+print(df_last[['x_test', 'y_test','Min_Deviation','Ideal_Func']])
 
 #printing the 4 choosed ideal function name
 print('The selected Ideal functions are:',col_list[1:5])
