@@ -6,4 +6,4 @@ column stores the minimum y deviation between the test point and corresponding i
 the point mapped with any ideal function) and the 4th column stores the name of mapped ideal function for each 
 test point if exists.
 for the test points which not mapped with any ideal function,the program puts 0 in the coressponding cell.
-if a test point mapped with more than one ideal function, the program chooses the ideal function with minimum y deviation 
+if a test point mapped with more than one ideal function, the program chooses the ideal function with minimum y deviation. 
